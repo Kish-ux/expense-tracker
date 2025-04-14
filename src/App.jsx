@@ -1,38 +1,55 @@
-import React, { useState } from 'react'
-import ExpenseTable from "./components/ExpenseTable";
-import ExpenseForm from "./components/ExpenseForm";
-import SearchBar from "./components/SearchBar";
-import initialExpenses from './data/InitialExpenses';
-import './index.css'
+import React, { useState } from 'react';
+import ExpenseForm from './components/ExpenseForm';
+import ExpenseTable from './components/ExpenseTable';
+import SearchBar from './components/SearchBar';
+import initialExpenses from './Data/expesesData'; 
+import './App.css';
 
 function App() {
   const [expenses, setExpenses] = useState(initialExpenses);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Filter expenses by description, expense name, and category
-  const filteredExpenses = expenses.filter(exp =>
-    exp.expense.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    exp.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    exp.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  const handleAddExpense = (newExpense) => {
-    // Add a unique ID to each expense
-    const expenseWithId = { ...newExpense, id: Date.now() };
-    setExpenses([...expenses, expenseWithId]);
+  const handleAddExpense = (expense) => {
+    setExpenses([...expenses, expense]);
   };
 
-  const handleDeleteExpense = (idToRemove) => {
-    setExpenses(expenses.filter(exp => exp.id !== idToRemove));
+  const handleDelete = (id) => {
+    setExpenses(expenses.filter(expense => expense.id !== id));
   };
+
+  const handleSearch = (term) => {
+    setSearchTerm(term.toLowerCase());
+  };
+
+  const handleSort = (key) => {
+    const sorted = [...expenses].sort((a, b) =>
+      a[key]?.toString().localeCompare(b[key]?.toString())
+    );
+    setExpenses(sorted);
+  };
+
+  const filteredExpenses = expenses.filter((expense) => {
+    return (
+      expense.expense.toLowerCase().includes(searchTerm) || 
+      expense.description.toLowerCase().includes(searchTerm)
+    );
+  });
 
   return (
-    <div className="App">
-      <h1 className="text-2xl font-bold mb-4">Expense Tracker</h1>
-      <p>You can check on your expenses through this tracker as it makes it easier to track everything</p>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-      <ExpenseForm onAddExpense={handleAddExpense} />
-      <ExpenseTable expenses={filteredExpenses} onDelete={handleDeleteExpense} />
+    <div className="container">
+      <h1>Expense Tracker</h1>
+      <p>Start keeping control of your finances</p>
+      <div className="content">
+        <ExpenseForm onAddExpense={handleAddExpense} />
+        <div className="search-table-container">
+          <SearchBar onSearch={handleSearch} />
+          <ExpenseTable
+            expenses={filteredExpenses}
+            onDelete={handleDelete}
+            onSort={handleSort}
+          />
+        </div>
+      </div>
     </div>
   );
 }
