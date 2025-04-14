@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from 'react'
+import ExpenseTable from "./components/ExpenseTable";
+import ExpenseForm from "./components/ExpenseForm";
+import SearchBar from "./components/SearchBar";
+import initialExpenses from './data/InitialExpenses';
+import './index.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [expenses, setExpenses] = useState(initialExpenses);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter expenses by description, expense name, and category
+  const filteredExpenses = expenses.filter(exp =>
+    exp.expense.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    exp.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    exp.category.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleAddExpense = (newExpense) => {
+    // Add a unique ID to each expense
+    const expenseWithId = { ...newExpense, id: Date.now() };
+    setExpenses([...expenses, expenseWithId]);
+  };
+
+  const handleDeleteExpense = (idToRemove) => {
+    setExpenses(expenses.filter(exp => exp.id !== idToRemove));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <h1 className="text-2xl font-bold mb-4">Expense Tracker</h1>
+      <p>You can check on your expenses through this tracker as it makes it easier to track everything</p>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <ExpenseForm onAddExpense={handleAddExpense} />
+      <ExpenseTable expenses={filteredExpenses} onDelete={handleDeleteExpense} />
+    </div>
+  );
 }
 
-export default App
+export default App;
