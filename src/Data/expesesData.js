@@ -2,27 +2,27 @@
 const expensesData = [
     {
         id: 1, 
-        name: "Groceries", 
-        description: "shopping", 
-        amount: 10000, 
-        category: "Food", 
-        date: "2025-04-01"
+        name: "Ducati", 
+        description: "Black", 
+        amount: 1200000, 
+        category: "Bikes", 
+        date: "2025-04-11"
     },
     { 
         id: 2, 
-        name: "Electricity Bill", 
-        description: "Tokens", 
-        amount: 1200, 
-        category: "Utilities", 
-        date: "2025-04-05" 
+        name: "Rolls Royce", 
+        description: "White", 
+        amount: 7000000, 
+        category: "Cars", 
+        date: "2025-04-14" 
     },
     { 
         id: 3,
-         name: "Activities", 
-         description: "Concert", 
-         amount: 15000, 
-         category: "Entertainment", 
-         date: "2025-04-06" 
+         name: "Mirror", 
+         description: "Flexible", 
+         amount: 1500, 
+         category: "Make-up", 
+         date: "2025-04-16" 
     },
     { 
         id: 4, 
@@ -34,11 +34,11 @@ const expensesData = [
     },
     { 
         id: 5, 
-        name: "Music", 
-        description: "Spotify",
-        amount: 2000, 
-        category: "Entertainment", 
-        date: "2025-04-08" 
+        name: "Sofa", 
+        description: "Leather",
+        amount: 45000, 
+        category: "Furniture", 
+        date: "2025-04-25" 
     }
 ];
 
