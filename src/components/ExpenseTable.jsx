@@ -7,21 +7,21 @@ function ExpenseTable({ expenses }) {
             <table className="expense-table">
                 <thead>
                     <tr>
-                        <th>Expense</th>
-                        <th>Description</th>
-                        <th>Category</th>
+                        <th>Name</th>
                         <th>Amount</th>
+                        <th>Description</th>
                         <th>Date</th>
+                        <th>Category</th>
                     </tr>
                 </thead>
                 <tbody>
                     {expenses.map((exp) => (
                        <tr key={exp.id}>
                             <td>{exp.name}</td>
-                            <td>{exp.description}</td>
-                            <td>{exp.category}</td>
                             <td>{exp.amount}</td>
+                            <td>{exp.description}</td>
                             <td>{exp.date}</td>
+                            <td>{exp.category}</td>
                         </tr>
                     ))}
                 </tbody>
